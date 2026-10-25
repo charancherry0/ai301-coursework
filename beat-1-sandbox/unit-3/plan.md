@@ -179,4 +179,21 @@ Rerun my posted repro steps on the fixed branch:
 
 ## Deviations
 
-<!-- Fill in after the build: what changed from this plan and why. -->
+No deviations. The build on `fix/69-json-array-fallback` (commit
+`b2457d0`) follows the plan: a dict check in both the fenced and raw
+branches of `parse_review_output()`, the H-02 `xfail` marker removed
+from `test_json_array_fallback`, and one new
+`test_fenced_json_array_fallback`. No other files changed. Re-running
+the test plan gave the expected output at every step: the raw and
+fenced arrays return one `general_feedback` section with no traceback,
+the object control is unchanged, the string/number/null/`[]` inputs
+fall back to plain text, and the parser tests pass (20 passed, 0
+xfailed). My posted plan comment is still accurate, so I didn't add
+a follow-up comment on #69.
+
+One difference in how I ran the checks, not in the change itself:
+`make` isn't installed in my WSL environment, so for step 7 I ran the
+commands the Makefile wraps (`ruff check .`, `black --check .`,
+`mypy api/ core/ ingestion/ rag/ agent/ safety/`,
+`pytest tests/unit -m unit`). All passed: 377 passed, 52 xfailed
+(other seeded issues). CI on the PR is still to come in unit 4.
