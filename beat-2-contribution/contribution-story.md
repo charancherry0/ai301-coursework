@@ -97,26 +97,29 @@ Honestly, the scout's verdicts were mostly right, but the wild exposed gaps that
 
 **Problem Description**
 
-[In your own words, what is broken or missing?]
+Conversations, the French government's open-source AI chat app, calls LLM providers (Albert, Mistral, and other OpenAI-compatible APIs) and an MCP server (data.gouv.fr) without identifying itself. The teams who run those services can't tell which traffic comes from Conversations, so they can't trace its calls, measure its usage, or reach the right people when something goes wrong. The missing piece is a User-Agent header that names the app on every outgoing LLM and MCP call.
 
 **Expected Behavior**
 
-[What should happen?]
+Every request Conversations sends to an LLM provider or MCP server carries the same agreed User-Agent naming the app, for example `conversations/<version>`. The exact format is the open question in my claim comment, which is waiting for the maintainer's answer.
 
 **Current Behavior**
 
-[What actually happens?]
+Only the Mistral provider sets a User-Agent explicitly (`chat/agents/base.py`, line 111), and the value it uses is pydantic-ai's `get_user_agent()`, which returns `pydantic-ai/<version>`: it names the library, not Conversations. The Albert and generic OpenAI-compatible providers in the same function pass no HTTP client or headers, so they fall back to whatever pydantic-ai and the OpenAI SDK send by default. The datagouv `MCPToolset` in `chat/mcp_servers.py` sets no headers either. I haven't yet confirmed the exact header each call sends on the wire; that is the first thing my reproduction will check.
 
 **Affected Components**
 
-[Which parts of the codebase are involved?]
+- `src/backend/chat/agents/base.py`: builds the model for each provider (Mistral with an explicit `httpx2.AsyncClient` and User-Agent; `AlbertOpenAIProvider` and `OpenAIProvider` without one).
+- `src/backend/chat/mcp_servers.py`: `DataGouvConnector.toolsets()` creates the `MCPToolset` for the data.gouv.fr MCP server. pydantic-ai 2.54.0's `MCPToolset` takes a `headers=` argument, which looks like the natural place to add it.
+- The library side: pydantic-ai 2.54.0 (`get_user_agent()` in `pydantic_ai/models/__init__.py`, `_create_openai_client` in `pydantic_ai/providers/_openai_compatible.py`) and mcp 1.29.1, both pinned in `src/backend/uv.lock`.
+- Tests for both files, plus a changelog entry, which CONTRIBUTING.md requires.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: no new tool this phase. I read the code with `gh`: I downloaded a snapshot of the repo, searched it for `User-Agent`, `get_user_agent` and `MCPToolset`, and read the pinned pydantic-ai 2.54.0 source on GitHub to see what its providers send by default.
+- What it produced: the map above. Only one of three LLM providers sets a User-Agent, that one names pydantic-ai rather than the app, and the MCP client sets none.
+- Difficulties: the default header for the OpenAI-compatible providers passes through two libraries (pydantic-ai's HTTP client and the OpenAI SDK), so reading the code alone can't tell me what goes over the wire.
+- What changed: I wrote "not yet confirmed" instead of guessing, and made checking the actual headers the first reproduction step.
 
 ---
 
@@ -203,13 +206,9 @@ observable named is not a strategy.]
 [A running log, added to as you work. Date each entry. What you
 built, decisions you made when you made them, wrong turns included.]
 
-**[Date]**
+**2026-11-11**
 
-[Entry]
-
-**[Date]**
-
-[Entry]
+My instructor approved #911, and I posted my claim comment asking the maintainer to confirm the User-Agent format: https://github.com/suitenumerique/conversations/issues/911#issuecomment-6812019713. Before writing it, I read the code so the question would be specific. Mistral already sends `pydantic-ai/<version>`, while the Albert/OpenAI providers and the datagouv MCP client set nothing. Decision: I won't write code until the format is agreed, because the issue says the spec isn't settled and that is exactly why my scout rejected it. I wasn't sure whether pydantic-ai adds its own default header when no HTTP client is passed, so the comment only says those providers "don't set one explicitly". Checking pydantic-ai 2.54.0 afterwards showed it does build a default client for them, so that careful wording was right.
 
 **Toolkit**
 
@@ -270,5 +269,7 @@ already shows you using: the doc you followed to set the environment
 up, the thread that explained the bug, the person who answered you.
 One real entry beats ten plausible ones.]
 
-- [Link to documentation that helped]
-- [Discussion, issue, or post that helped]
+- The issue itself, whose body named the open spec question: https://github.com/suitenumerique/conversations/issues/911
+- Conversations' CONTRIBUTING.md (AI-assistance rules, signed-off commits, changelog entry): https://github.com/suitenumerique/conversations/blob/main/CONTRIBUTING.md
+- pydantic-ai 2.54.0 source, for `get_user_agent()` and the OpenAI-compatible provider's default client: https://github.com/pydantic/pydantic-ai/blob/v2.54.0/pydantic_ai_slim/pydantic_ai/models/__init__.py
+- GitHub's search syntax docs, where I found the `-linked:pr` qualifier that fixed my scout's search: https://docs.github.com/en/search-github/searching-on-github/searching-issues-and-pull-requests
