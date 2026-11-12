@@ -1,4 +1,4 @@
-# Contribution: [Issue Title]
+# Contribution: Add user-agent to MCP and LLM calls
 
 Path: `beat-2-contribution/contribution-story.md`
 
@@ -7,12 +7,11 @@ the repository is not read. **Keep every section header below under its exact na
 format criteria grade exactly that. Your course repo link is the whole submission: no tool
 files and no evidence uploads are part of Assignment 5.
 
-**Contribution Number:** [1]
-**Student:** [Student name]
-**GitHub Username:** [your GitHub username, exactly as it appears on your profile - no @, no
-profile URL. Your comments upstream are identified by this name.]
-**Issue:** [GitHub issue link]
-**Pull Request:** [GitHub PR link, once opened]
+**Contribution Number:** 1
+**Student:** Reddy Charan Pulivendula
+**GitHub Username:** charancherry0
+**Issue:** https://github.com/suitenumerique/conversations/issues/911
+**Pull Request:** pending
 
 One repository, built across units 5 to 8, telling the whole story of your real
 contribution. Fill it as you work, not at the end — the sections below ask for evidence that
@@ -79,24 +78,18 @@ drafted, what you did with the draft.]
 
 ## Why I Chose This Issue
 
-[1-2 paragraphs in your own words: how you searched, what your scan
-surfaced, what your scout's verdict said, why this issue fits your
-profile, and what you hope to learn. If your scout's verdict on it
-was reject and you chose it anyway, say so here and say why; choosing
-against your own tool silently is what loses points. Close with an
-honest read of the tool itself: where the scout fell short on a real
-wild search and what you changed or would change, or what convinced
-you it held up. **Record the link to your claim comment in this section too.**
-Not claimed yet? Write `claim pending` and today's date where the link goes,
-and add the link the moment your claim lands.]
+I searched two ways. My issue-scout scan ran two `gh search issues` queries for Python and TypeScript `llm` issues labelled `good first issue`, ranked 123 surviving results by fewest comments, and graded the top five (2 accepted, 3 rejected). Then I went to the Issue Selection site and checked 15 more picks, first by hand with `gh` and then with the scout. None of them worked out: ten already had an open pull request or a recent claim (ArduPilot, taskchampion, five Zulip issues, three vllm-ascend tasks), and the other five were open-ended invitations or questions rather than changes, had competing fixes nobody had chosen between, or overlapped someone else's open pull request (DrumBeatRepo, four Cherry Studio issues). A search I added `-linked:pr` to found suitenumerique/conversations#911, "Add user-agent to MCP and LLM calls", and my instructor approved using it. My scout's verdict was **reject**: it passed every check except settled-approach, because the collaborator who opened it wrote "Needs more spec'ing with firsthand LLM (Albert) and MCP (datagouv) teams". I chose it anyway because that is the only blocker, and it is one I can remove by asking. In my claim comment I asked the maintainer to confirm the header format, and I will not start coding until they do. It fits my profile better than anything else I found: it is Python, it touches the LLM provider and MCP client code of a generative-AI chat app, the change is small enough for my five hours, and the repo's CONTRIBUTING.md allows AI-assisted work. I hope to learn how a real app wires its LLM providers and MCP tools through pydantic-ai, and how to agree a spec with maintainers before writing code. I already found that the Mistral provider sends pydantic-ai's default User-Agent while the Albert/OpenAI providers and the datagouv MCP client set none.
+
+Claim comment: https://github.com/suitenumerique/conversations/issues/911#issuecomment-6812019713
+
+Honestly, the scout's verdicts were mostly right, but the wild exposed gaps that the course eval set never did. It kept grading issues that were already taken, because popular good-first-issues get several pull requests within days, so I moved that check into the search with `-linked:pr`. It also misread real repos in four ways, each of which I patched in `rubric.md`: it sampled same-day issues for responsiveness, it missed a maintainer GitHub listed as CONTRIBUTOR, it treated a `help wanted` label added by an issue template as a maintainer endorsement, and it missed an unlinked open pull request that rewrote the same functions. The tool is still weak in two places I have not fixed: it ignores project triage bots, and `gh search` cannot filter out tiny, days-old repos, which flooded my `llm` results.
 
 **Toolkit**
 
-- Tool: issue-scout (your scout: your search strategy, your rubric),
-  and how you used it
-- What it produced: [the scan and its verdict on this issue, described]
-- Difficulties: [where it fell short, or "none met" if none did]
-- What changed: [what you patched or would update, or "nothing"]
+- Tool: issue-scout (my search strategy and my rubric). I used it for one full scan, then for direct grading of my Issue Selection site picks, with free `gh` checks first so I only paid to grade issues that were actually open.
+- What it produced: on this issue, a reject on settled-approach ("Needs more spec'ing…") with every other required check passing, including unclaimed, maintainer-endorsed (the collaborator opened it and labelled it `good first issue`), and ai-contributions-allowed (CONTRIBUTING.md allows AI with conditions).
+- Difficulties: 9 of my 11 hand-checked site picks were already taken by a pull request, which the scout only discovered at grading time; plus the four rubric misreads above, and the flood of tiny new repos from the `llm` keyword.
+- What changed: I added `-linked:pr`, a repo-name check in the avoid filter, and a one-issue-per-repo cap to `search-strategy.md`; patched maintainer-responsive, the maintainer definition, the label-endorsement rule, and unclaimed in `rubric.md`; and logged each change with a dated reason in `scan-notes.md`.
 
 ---
 
