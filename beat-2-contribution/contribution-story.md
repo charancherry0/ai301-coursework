@@ -55,10 +55,9 @@ happened; these entries are the toolkit's own timeline.
 All four entries are graded. Keep every heading below, and fill each
 one in the week it belongs to.
 
-**Unit 5: [one line on the tool work]**
+**Unit 5: Grew my issue-select skill into issue-scout, a scout that searches GitHub for me**
 
-[2-4 sentences: what you built (the scout, your strategy), what broke
-or fell short, what changed because of it.]
+I installed issue-scout over my Unit 1 skill and wrote a search strategy with two `gh search issues` queries for Python and TypeScript `llm` issues labelled `good first issue`, ranked fewest comments first; my first scan graded five issues (2 accepted, 3 rejected) and I then checked 15 more picks by hand or with the scout. The scan showed problems in my strategy: the avoid filter only read titles, so a React Native repo ranked #1, and 9 of my 11 hand-checked picks already had an open PR, so I added `-linked:pr` and a one-issue-per-repo cap to rule those out before grading. Grading showed four ways my rubric misread real repos: maintainer-responsive sampled issues opened that morning; maintainer checks ignored a merger GitHub listed as CONTRIBUTOR; a `help wanted` label the reporter's template added at creation passed as maintainer endorsement (cherry-studio#19396); and `unclaimed` missed an unlinked open PR the thread said rewrites the same functions (cherry-studio#24233). I fixed each of those in `rubric.md` and logged the reason in `scan-notes.md`, though I didn't rescan to confirm the fixes, and I still haven't fixed two gaps: the rubric ignores project triage bots, and `gh search` can't filter out tiny, days-old repos.
 
 **Unit 6: [one line on the tool work]**
 
