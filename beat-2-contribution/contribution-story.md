@@ -11,52 +11,22 @@ files and no evidence uploads are part of Assignment 5.
 **Student:** Reddy Charan Pulivendula
 **GitHub Username:** charancherry0
 **Issue:** https://github.com/suitenumerique/conversations/issues/911
-**Pull Request:** pending
-
-One repository, built across units 5 to 8, telling the whole story of your real
-contribution. Fill it as you work, not at the end — the sections below ask for evidence that
-is far easier to write down as it happens than to reconstruct in the last weekend.
-
-Contribution Number stays `[1]` unless you make more than one contribution this term; it
-just numbers them.
+**Pull Request:** https://github.com/suitenumerique/conversations/pull/962
 
 ---
 
 ## Toolkit
 
-Every story section below, from Why I Chose This Issue through Pull
-Request, ends with a Toolkit block: which tool did that phase's work
-and how you used it, what it produced, what difficulties or
-shortcomings it presented, and what you changed or would change
-because of them. Together the blocks are the thread the rubric's
-Toolkit points read, and they are the raw material for your unit-9
-portfolio, so keep them current as you work rather than
-reconstructing them later.
-
-A Toolkit block looks like this (copy it into each story section and
-fill it there):
-
-```text
-**Toolkit**
-
-- Tool: [which tool did this phase's work, and how you used it]
-- What it produced: [described in a sentence or a short excerpt]
-- Difficulties: [what fought you or fell short, or "none met"]
-- What changed: [the patch, revision, or workaround, what you would
-  update, or "nothing"]
-```
-
-This section also keeps one short dated entry per week of tool work,
-starting below: what you built or changed that week, what broke, and
-what you changed because of it. The blocks tell the story where it
-happened; these entries are the toolkit's own timeline.
-
-All four entries are graded. Keep every heading below, and fill each
-one in the week it belongs to.
+Every story section below ends with a Toolkit block: which tool did that phase's work, what it
+produced, what fell short, and what I changed because of it. The weekly entries below are the
+toolkit's own timeline.
 
 **Unit 5: Grew my issue-select skill into issue-scout, a scout that searches GitHub for me**
 
-I installed issue-scout over my Unit 1 skill and wrote a search strategy with two `gh search issues` queries for Python and TypeScript `llm` issues labelled `good first issue`, ranked fewest comments first; my first scan graded five issues (2 accepted, 3 rejected) and I then checked 15 more picks by hand or with the scout. The scan showed problems in my strategy: the avoid filter only read titles, so a React Native repo ranked #1, and 9 of my 11 hand-checked picks already had an open PR, so I added `-linked:pr` and a one-issue-per-repo cap to rule those out before grading. Grading showed four ways my rubric misread real repos: maintainer-responsive sampled issues opened that morning; maintainer checks ignored a merger GitHub listed as CONTRIBUTOR; a `help wanted` label the reporter's template added at creation passed as maintainer endorsement (cherry-studio#19396); and `unclaimed` missed an unlinked open PR the thread said rewrites the same functions (cherry-studio#24233). I fixed each of those in `rubric.md` and logged the reason in `scan-notes.md`, though I didn't rescan to confirm the fixes, and I still haven't fixed two gaps: the rubric ignores project triage bots, and `gh search` can't filter out tiny, days-old repos.
+I installed issue-scout and wrote a search strategy with two `gh search issues` queries. Its first
+scan showed my search kept surfacing issues that were already taken, so I added `-linked:pr`, and
+real repos exposed four rubric misreads, which I patched. The details are in Why I Chose This Issue.
+I didn't rescan to confirm the patches.
 
 **Unit 6: [one line on the tool work]**
 
@@ -78,18 +48,46 @@ drafted, what you did with the draft.]
 
 ## Why I Chose This Issue
 
-I searched two ways. My issue-scout scan ran two `gh search issues` queries for Python and TypeScript `llm` issues labelled `good first issue`, ranked 123 surviving results by fewest comments, and graded the top five (2 accepted, 3 rejected). Then I went to the Issue Selection site and checked 15 more picks, first by hand with `gh` and then with the scout. None of them worked out: ten already had an open pull request or a recent claim (ArduPilot, taskchampion, five Zulip issues, three vllm-ascend tasks), and the other five were open-ended invitations or questions rather than changes, had competing fixes nobody had chosen between, or overlapped someone else's open pull request (DrumBeatRepo, four Cherry Studio issues). A search I added `-linked:pr` to found suitenumerique/conversations#911, "Add user-agent to MCP and LLM calls", and my instructor approved using it. My scout's verdict was **reject**: it passed every check except settled-approach, because the collaborator who opened it wrote "Needs more spec'ing with firsthand LLM (Albert) and MCP (datagouv) teams". I chose it anyway because that is the only blocker, and it is one I can remove by asking. In my claim comment I asked the maintainer to confirm the header format, and I will not start coding until they do. It fits my profile better than anything else I found: it is Python, it touches the LLM provider and MCP client code of a generative-AI chat app, the change is small enough for my five hours, and the repo's CONTRIBUTING.md allows AI-assisted work. I hope to learn how a real app wires its LLM providers and MCP tools through pydantic-ai, and how to agree a spec with maintainers before writing code. I already found that the Mistral provider sends pydantic-ai's default User-Agent while the Albert/OpenAI providers and the datagouv MCP client set none.
+My issue-scout scan ran two `gh search issues` queries for Python and TypeScript `llm` issues
+labelled `good first issue`, ranked 123 surviving results by fewest comments, and graded the top
+five (2 accepted, 3 rejected). I then checked 15 picks from the Issue Selection site. None worked
+out: ten already had an open pull request or a recent claim, and the other five were open-ended,
+had competing fixes, or overlapped someone else's open PR.
+
+A search with `-linked:pr` added found suitenumerique/conversations#911, "Add user-agent to MCP
+and LLM calls", and my instructor approved it. The scout's verdict was **reject**. It passed every
+check except settled-approach, because the collaborator who opened it wrote "Needs more spec'ing
+with firsthand LLM (Albert) and MCP (datagouv) teams". I chose it anyway because I could remove
+that blocker by asking. It also fits my profile: it's Python, it touches the LLM provider and MCP
+client code of a generative-AI chat app, it's small enough for my five hours, and CONTRIBUTING.md
+allows AI-assisted work.
 
 Claim comment: https://github.com/suitenumerique/conversations/issues/911#issuecomment-6812019713
 
-Honestly, the scout's verdicts were mostly right, but the wild exposed gaps that the course eval set never did. It kept grading issues that were already taken, because popular good-first-issues get several pull requests within days, so I moved that check into the search with `-linked:pr`. It also misread real repos in four ways, each of which I patched in `rubric.md`: it sampled same-day issues for responsiveness, it missed a maintainer GitHub listed as CONTRIBUTOR, it treated a `help wanted` label added by an issue template as a maintainer endorsement, and it missed an unlinked open pull request that rewrote the same functions. The tool is still weak in two places I have not fixed: it ignores project triage bots, and `gh search` cannot filter out tiny, days-old repos, which flooded my `llm` results.
+The scout's verdicts were mostly right, but real repos exposed gaps the course eval set never did.
+Popular good-first-issues get several pull requests within days, and the scout only noticed at
+grading time. It also misread real repos in four ways:
+
+- It sampled same-day issues when checking whether maintainers reply.
+- It missed a maintainer whom GitHub listed as CONTRIBUTOR.
+- It treated a `help wanted` label added by an issue template as a maintainer endorsement
+  (cherry-studio#19396).
+- It missed an unlinked open pull request that rewrote the same functions (cherry-studio#24233).
+
+It still ignores project triage bots, and `gh search` can't filter out tiny repos that are only
+days old.
 
 **Toolkit**
 
-- Tool: issue-scout (my search strategy and my rubric). I used it for one full scan, then for direct grading of my Issue Selection site picks, with free `gh` checks first so I only paid to grade issues that were actually open.
-- What it produced: on this issue, a reject on settled-approach ("Needs more spec'ing…") with every other required check passing, including unclaimed, maintainer-endorsed (the collaborator opened it and labelled it `good first issue`), and ai-contributions-allowed (CONTRIBUTING.md allows AI with conditions).
-- Difficulties: 9 of my 11 hand-checked site picks were already taken by a pull request, which the scout only discovered at grading time; plus the four rubric misreads above, and the flood of tiny new repos from the `llm` keyword.
-- What changed: I added `-linked:pr`, a repo-name check in the avoid filter, and a one-issue-per-repo cap to `search-strategy.md`; patched maintainer-responsive, the maintainer definition, the label-endorsement rule, and unclaimed in `rubric.md`; and logged each change with a dated reason in `scan-notes.md`.
+- Tool: issue-scout (my search strategy and rubric), for one full scan and then direct grading of
+  site picks, with free `gh` checks first.
+- What it produced: on #911, a reject on settled-approach ("Needs more spec'ing…") with every
+  other required check passing.
+- Difficulties: 9 of my 11 hand-checked picks were already taken, which the scout found only after
+  I'd paid to grade them; plus the four misreads above.
+- What changed: `-linked:pr`, a repo-name avoid check and a one-issue-per-repo cap in
+  `search-strategy.md`; four patched checks in `rubric.md`, each logged with its reason in
+  `scan-notes.md`.
 
 ---
 
@@ -97,29 +95,44 @@ Honestly, the scout's verdicts were mostly right, but the wild exposed gaps that
 
 **Problem Description**
 
-Conversations, the French government's open-source AI chat app, calls LLM providers (Albert, Mistral, and other OpenAI-compatible APIs) and an MCP server (data.gouv.fr) without identifying itself. The teams who run those services can't tell which traffic comes from Conversations, so they can't trace its calls, measure its usage, or reach the right people when something goes wrong. The missing piece is a User-Agent header that names the app on every outgoing LLM and MCP call.
+Conversations, the French government's open-source AI chat app, calls LLM providers (Albert,
+Mistral, and other OpenAI-compatible APIs) and an MCP server (data.gouv.fr) without identifying
+itself. The teams who run those services can't tell which traffic comes from Conversations, so
+they can't trace its calls, measure its usage, or reach the right people when something goes
+wrong.
 
 **Expected Behavior**
 
-Every request Conversations sends to an LLM provider or MCP server carries the same agreed User-Agent naming the app, for example `conversations/<version>`. The exact format is the open question in my claim comment, which is waiting for the maintainer's answer.
+Every request Conversations sends to an LLM provider or MCP server carries the same User-Agent
+naming the app, for example `conversations/<version>`. The exact format is the open question from
+the issue.
 
 **Current Behavior**
 
-Only the Mistral provider sets a User-Agent explicitly (`chat/agents/base.py`, line 111), and the value it uses is pydantic-ai's `get_user_agent()`, which returns `pydantic-ai/<version>`: it names the library, not Conversations. The Albert and generic OpenAI-compatible providers in the same function pass no HTTP client or headers, so they fall back to whatever pydantic-ai and the OpenAI SDK send by default. The datagouv `MCPToolset` in `chat/mcp_servers.py` sets no headers either. I haven't yet confirmed the exact header each call sends on the wire; that is the first thing my reproduction will check.
+No outgoing call names Conversations. Each one sends the name of whichever library made it; the
+measured values are in Reproduction Evidence. The code sets a User-Agent in only one place, on the
+Mistral provider's HTTP client
+([`base.py` line 111](https://github.com/suitenumerique/conversations/blob/da71d811ac7f9c179eda86a4324ee34fdd7f7c4f/src/backend/chat/agents/base.py#L111)),
+and even there the Mistral SDK overwrites it.
 
 **Affected Components**
 
-- `src/backend/chat/agents/base.py`: builds the model for each provider (Mistral with an explicit `httpx2.AsyncClient` and User-Agent; `AlbertOpenAIProvider` and `OpenAIProvider` without one).
-- `src/backend/chat/mcp_servers.py`: `DataGouvConnector.toolsets()` creates the `MCPToolset` for the data.gouv.fr MCP server. pydantic-ai 2.54.0's `MCPToolset` takes a `headers=` argument, which looks like the natural place to add it.
-- The library side: pydantic-ai 2.54.0 (`get_user_agent()` in `pydantic_ai/models/__init__.py`, `_create_openai_client` in `pydantic_ai/providers/_openai_compatible.py`) and mcp 1.29.1, both pinned in `src/backend/uv.lock`.
-- Tests for both files, plus a changelog entry, which CONTRIBUTING.md requires.
+- [`src/backend/chat/agents/base.py`](https://github.com/suitenumerique/conversations/blob/da71d811ac7f9c179eda86a4324ee34fdd7f7c4f/src/backend/chat/agents/base.py#L77):
+  `prepare_custom_model()` builds the Mistral, OpenAI-compatible and Albert providers.
+- [`src/backend/chat/mcp_servers.py`](https://github.com/suitenumerique/conversations/blob/da71d811ac7f9c179eda86a4324ee34fdd7f7c4f/src/backend/chat/mcp_servers.py#L219):
+  `DataGouvConnector.toolsets()` creates the data.gouv `MCPToolset`.
+- The libraries underneath: pydantic-ai 2.54.0, mistralai 2.9.4, openai 3.20.0 and mcp 1.30.0
+  (over httpx 0.28.1), all pinned in `src/backend/uv.lock`.
 
 **Toolkit**
 
-- Tool: no new tool this phase. I read the code with `gh`: I downloaded a snapshot of the repo, searched it for `User-Agent`, `get_user_agent` and `MCPToolset`, and read the pinned pydantic-ai 2.54.0 source on GitHub to see what its providers send by default.
-- What it produced: the map above. Only one of three LLM providers sets a User-Agent, that one names pydantic-ai rather than the app, and the MCP client sets none.
-- Difficulties: the default header for the OpenAI-compatible providers passes through two libraries (pydantic-ai's HTTP client and the OpenAI SDK), so reading the code alone can't tell me what goes over the wire.
-- What changed: I wrote "not yet confirmed" instead of guessing, and made checking the actual headers the first reproduction step.
+- Tool: no course tool. I downloaded the repo with `gh`, searched it for `User-Agent`,
+  `get_user_agent` and `MCPToolset`, and read the pinned pydantic-ai source.
+- What it produced: a map of where each outgoing call is built.
+- Difficulties: the header passes through two or three libraries, so reading the code couldn't
+  tell me what actually goes over the wire.
+- What changed: I wrote "not yet confirmed" instead of guessing, and made measuring the real
+  headers the first reproduction step. The measurement later proved my Mistral guess wrong.
 
 ---
 
@@ -127,31 +140,56 @@ Only the Mistral provider sets a User-Agent explicitly (`chat/agents/base.py`, l
 
 **Environment Setup**
 
-[What a stranger would need to stand this up: your operating system,
-the relevant versions (language, runtime, package manager, the project
-itself), and how you set the project up. Then the challenges you faced
-and how you solved them, or that none came up.]
+- Ubuntu 22.04.3 LTS on WSL2 (Windows), with uv 0.13.3 installing Python 3.14.8, which the project requires
+  (`requires-python = "~=3.14.6"`; my system Python is 3.10).
+- Conversations at `main` commit `da71d81` (2026-11-17), cloned from
+  https://github.com/suitenumerique/conversations.
+- Backend setup: `cd src/backend && uv sync --python 3.14 --all-extras --all-groups`. Tests then
+  run with `uv run pytest …` using the repo's `env.d/test` settings.
+- Challenges: plain `uv sync` skips the dev group, so `pytest` was missing ("Failed to spawn:
+  pytest"); `--all-groups` fixed it. Tests marked `django_db` need Postgres on port 15432, which I
+  didn't run. I wrote my reproduction so it needs no database, and I report the database-backed
+  tests as not run.
 
 **Steps to Reproduce**
 
-1. [Step 1]
-2. [Step 2]
-3. [Observed result]
+1. Start a local HTTP server on `127.0.0.1` that records every request's `User-Agent` header and
+   answers with a minimal chat completion.
+2. Build each provider with the app's own `prepare_custom_model()` (kinds `mistral`, `openai`, and
+   `openai` with `co2_handling="albert"`), point its `base_url` at the server, and run one agent
+   turn. Connect a `MCPToolset` to the server's `/mcp` path.
+3. Observed result: every call names a library, none names Conversations.
 
 **Reproduction Evidence**
 
-- **Commit showing reproduction:** [link to commit in your fork]
-- **Screenshots/logs:** [if applicable]
-- **My findings:** [what you discovered during reproduction; an
-  honest, evidenced cannot-reproduce that led you to re-pick or ask
-  the maintainer belongs here and costs you nothing]
+- **Commit showing reproduction:** reproduced on upstream `main`
+  [`da71d81`](https://github.com/suitenumerique/conversations/commit/da71d811ac7f9c179eda86a4324ee34fdd7f7c4f).
+  The same check became the wire tests in my fix commit
+  [`851a806`](https://github.com/charancherry0/conversations/commit/851a806). Run on `main`, they fail with
+  these values.
+- **Screenshots/logs:**
+
+  ```
+  REPRO mistral  -> User-Agent: ['mistral-client-python/2.9.4']
+  REPRO openai   -> User-Agent: ['pydantic-ai/2.54.0']
+  REPRO albert   -> User-Agent: ['pydantic-ai/2.54.0']
+  REPRO mcp      -> User-Agent: ['python-httpx/0.28.1']
+  ```
+
+- **My findings:** the issue is real for all four calls. My claim comment said Mistral sends
+  pydantic-ai's string. The wire shows `mistral-client-python/2.9.4`, because the Mistral SDK
+  writes its own header on every request, over the one the app puts on its HTTP client.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: a throwaway pytest file with a standard-library HTTP server that records headers,
+  written with Claude Code. I didn't run my repro-check skill: like pr-precheck (see Pull
+  Request), its scope is the course's Path Review repo.
+- What it produced: the four measured headers above.
+- Difficulties: the first run failed with "async def functions are not natively supported", because
+  the repo runs pytest-asyncio in strict mode.
+- What changed: I added `pytestmark = pytest.mark.asyncio`, and switched from `headers.get` to
+  `headers.get_all` so a duplicated header couldn't hide.
 
 ---
 
@@ -159,89 +197,141 @@ and how you solved them, or that none came up.]
 
 **Analysis**
 
-[Your analysis of the root cause: what is causing the issue, traced
-to the files and functions involved.]
+Each layer sets its own User-Agent per request, after anything the app sets as a client default:
+
+- pydantic-ai's OpenAI model calls `extra_headers.setdefault('User-Agent', get_user_agent())` on
+  every request.
+- pydantic-ai's Mistral model passes `http_headers={'User-Agent': get_user_agent()}`.
+- The Mistral SDK first writes `sdk_configuration.user_agent` into the headers
+  (`mistralai/client/basesdk.py`).
+- The MCP client uses plain httpx, so it sends httpx's default.
+
+So a header set on an HTTP client default never reaches the wire for the LLM calls. It has to be
+applied after the SDK builds each request.
 
 **Proposed Solution**
 
-[High-level description of your fix approach, and what you are
-deliberately NOT changing.]
+- One helper, `chat/user_agent.py:get_user_agent()`, returns `conversations/<release>`. A new
+  `OUTGOING_USER_AGENT` setting replaces it, because the format isn't agreed yet.
+- Each LLM provider gets its own `httpx2.AsyncClient` with a `request` event hook that sets the
+  header just before sending.
+- The data.gouv `MCPToolset` passes `headers={"User-Agent": …}`.
+- Not changing: timeouts (still 600 s, 5 s to connect, as Mistral already had), and providers
+  resolved by pydantic-ai's built-in registry (non-custom models), which the issue doesn't name.
 
 **Implementation Plan**
 
-1. [Modify file X to do Y]
-2. [Add or change Z]
-3. [Update tests]
+1. Add `chat/user_agent.py` and the `OUTGOING_USER_AGENT` setting in `conversations/settings.py`.
+2. In `chat/agents/base.py`, add `_http_client()` and pass it to the Mistral, Albert and OpenAI
+   providers.
+3. In `chat/mcp_servers.py`, pass the header to `MCPToolset`.
+4. Add wire-level tests in `chat/tests/test_user_agent.py`, a changelog line, and a row in
+   `docs/env.md`.
 
-[Record deviations here as they happen: what changed mid-build and
-why. A recorded deviation is honest work; silent drift is not.]
+Deviations:
+- The setting wasn't in my claim comment. I added it because the issue says the format still needs
+  agreeing with the Albert and data.gouv teams. The PR description states this deviation.
+- My first build set the header as the HTTP client default, the way the Mistral code already did.
+  Re-running the reproduction showed openai and albert still sending `pydantic-ai/2.54.0` and
+  Mistral sending a mangled `mistral-client-python/pydantic-ai/2.54.0`. I switched to the request
+  hook (step 2).
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: Claude Code, used to read the pinned library source (`pydantic_ai/models/openai.py`,
+  `models/mistral.py`, `mistralai/client/basesdk.py`) and to draft the change.
+- What it produced: the per-request override chain above, and the request-hook design.
+- Difficulties: the first design looked right and passed a code read, but failed on the wire.
+- What changed: I now re-run the reproduction after every build, not just at the end.
 
 ---
 
 ## Testing Strategy
 
-[What observable checks prove the fix: your reproduction steps re-run
-against the built change (before and after), and the repo's own test
-suite or checks with the outcome shown. "Tests pass" with nothing
-observable named is not a strategy.]
+1. **The reproduction, re-run against the fix.** `chat/tests/test_user_agent.py` re-runs the four
+   wire checks from Reproduction, asserting the exact header list. Run with
+   `uv run pytest chat/tests/test_user_agent.py`:
+   - On `main` (fix stashed): `4 failed, 2 passed`, for example
+     `assert ['mistral-client-python/2.9.4'] == ['conversations-test/1.0']`.
+   - With the fix: `6 passed`, and every call sends
+     `conversations/0.0.29` (or the configured value).
+2. **The setting.** Two unit tests check the default (`conversations/{settings.RELEASE}`) and the
+   override.
+3. **Nearby suites.** `uv run pytest chat/tests/agents` gave 108 passed and 8 errors. All 8 need
+   Postgres, which I didn't run, so the full `make test` hasn't been run on my machine; the PR's
+   CI will run it.
+4. **Lint.** `ruff check`, `ruff format --check` and `pylint` on the changed files: clean
+   (pylint 10.00/10).
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: pytest with the repo's settings, plus `git stash` to run the same tests on the unfixed code.
+- What it produced: the before/after results above.
+- Difficulties: my first MCP test built the connector with `UserFactory`, which needs the database,
+  so it errored ("connection to server at 127.0.0.1, port 15432 failed").
+- What changed: the test builds `DataGouvConnector(enabled=True, opted_in=True)` directly, so it
+  runs without Postgres and still goes through the app's real `toolsets()` code.
 
 ---
 
 ## Implementation Notes
 
-[A running log, added to as you work. Date each entry. What you
-built, decisions you made when you made them, wrong turns included.]
-
 **2026-11-11**
 
-My instructor approved #911, and I posted my claim comment asking the maintainer to confirm the User-Agent format: https://github.com/suitenumerique/conversations/issues/911#issuecomment-6812019713. Before writing it, I read the code so the question would be specific. Mistral already sends `pydantic-ai/<version>`, while the Albert/OpenAI providers and the datagouv MCP client set nothing. Decision: I won't write code until the format is agreed, because the issue says the spec isn't settled and that is exactly why my scout rejected it. I wasn't sure whether pydantic-ai adds its own default header when no HTTP client is passed, so the comment only says those providers "don't set one explicitly". Checking pydantic-ai 2.54.0 afterwards showed it does build a default client for them, so that careful wording was right.
+My instructor approved #911, and I posted my claim comment asking the maintainer to confirm the
+User-Agent format. Decision: no code until the format was agreed, because that's exactly why my
+scout rejected the issue.
+
+**2026-11-18**
+
+There was still no reply after six days, so I built the fix with the format configurable. That
+keeps the open decision with the maintainers instead of guessing it. Measuring the real headers
+showed my Mistral assumption was wrong. My first build (a client default header) failed on the
+wire, so I moved the header into a request hook. Committed as
+[`851a806`](https://github.com/charancherry0/conversations/commit/851a806), signed off and SSH-signed
+as CONTRIBUTING.md requires. I registered my SSH key as a GitHub signing key, and GitHub shows the
+commit as verified.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: git and gh: a branch `user-agent-911` on my fork, `git commit -S --signoff`.
+- What it produced: one commit, 7 files, +171/−6.
+- Difficulties: GitHub didn't recognise my SSH key for signing until I refreshed `gh` with the
+  `admin:ssh_signing_key` scope and added the key as a signing key.
+- What changed: the key is registered, so future commits verify too.
 
 ---
 
 ## Pull Request
 
-**PR Link:** [GitHub PR URL when opened]
+**PR Link:** https://github.com/suitenumerique/conversations/pull/962
 
-**PR Description:** [what the PR says; much of the content above
-adapts into it]
+**PR Description:** The description follows the repo's PR template:
+- **Purpose:** closes #911, with the measured before/after header table.
+- **Proposal:** the helper, the request hook (and why a client default isn't enough), the MCP
+  header, the tests, the changelog line and the `docs/env.md` row.
+- **Deviation note:** the `OUTGOING_USER_AGENT` setting, and an offer to change the default
+  format.
+- **Tests run:** with the database-backed tests stated as not run.
+- **AI use:** says I used Claude Code and ran the tests myself.
+- **Checklist:** every External contributions item ticked.
 
 **Maintainer Feedback:**
 
-- [Date]: [feedback received, or "none yet"; silence is a normal
-  state and costs you nothing]
-- [Date]: [how you addressed it]
+- 2026-11-18: none yet
 
-**Status:** [Awaiting review / Iterating / Merged / Closed. The
-status is a fact you record, never a grade: the PR is graded as
-opened.]
+**Status:** Awaiting review
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: my pr-precheck skill, to grade the PR before opening it.
+- What it produced: a refusal. Its `scope.md` only allows the course's Path Review repo, so it
+  wouldn't grade a PR to `suitenumerique/conversations`.
+- Difficulties: I tried to widen that scope, but my permission setup blocked edits to the
+  staff-written `scope.md`.
+- What changed: I checked the PR by hand against the repo's own checklist: signed and signed-off
+  commit, gitmoji message, changelog line, tests, and the template sections. Next time, I'd add a
+  wild-repo scope to the tool before I need it, with my instructor's OK.
 
 ---
 
@@ -249,27 +339,39 @@ opened.]
 
 **Technical Skills Gained**
 
-[What you learned technically, named concretely.]
+- How a request's headers get built in layers: pydantic-ai, the provider SDK and httpx each set
+  their own User-Agent, and only the last one before sending wins. An httpx `request` event hook
+  is the reliable place to override a header.
+- Testing what goes over the network with a standard-library HTTP server, instead of trusting
+  what the code seems to set.
+- Running an unfamiliar Django project's tests with uv on a newer Python than my system has, and
+  separating tests that need Postgres from ones that don't.
+- Commit signing with an SSH key, and the DCO sign-off.
 
 **Challenges Overcome**
 
-[What was hard and how you solved it; point at the real events, the
-Toolkit blocks above are full of them.]
+- My first fix was wrong, and only the wire check showed it. Re-running the reproduction after
+  the build caught it before a reviewer did.
+- My claim comment's guess about Mistral was wrong. I corrected it in the PR instead of keeping
+  it.
+- The open spec: rather than wait without end or guess the format, I made it a setting and said so
+  in the PR.
 
 **What I'd Do Differently Next Time**
 
-[Reflection on your process.]
+- Measure first, then write the claim comment. My comment carried a wrong guess about Mistral
+  that ten minutes with a recording server would have caught.
+- Prove each tool change with the smallest check. I patched four rubric checks without re-grading
+  the issues that exposed them; re-grading just those four would have cost little.
+- Check that my course tools' scope covers the repo I'm really contributing to before I depend on
+  them at PR time.
 
 ---
 
 ## Resources Used
 
-[What actually helped, not a reading list. List things this story
-already shows you using: the doc you followed to set the environment
-up, the thread that explained the bug, the person who answered you.
-One real entry beats ten plausible ones.]
-
 - The issue itself, whose body named the open spec question: https://github.com/suitenumerique/conversations/issues/911
-- Conversations' CONTRIBUTING.md (AI-assistance rules, signed-off commits, changelog entry): https://github.com/suitenumerique/conversations/blob/main/CONTRIBUTING.md
-- pydantic-ai 2.54.0 source, for `get_user_agent()` and the OpenAI-compatible provider's default client: https://github.com/pydantic/pydantic-ai/blob/v2.54.0/pydantic_ai_slim/pydantic_ai/models/__init__.py
-- GitHub's search syntax docs, where I found the `-linked:pr` qualifier that fixed my scout's search: https://docs.github.com/en/search-github/searching-on-github/searching-issues-and-pull-requests
+- Conversations' CONTRIBUTING.md (sign-off, signed commits, gitmoji, changelog, AI rules): https://github.com/suitenumerique/conversations/blob/main/CONTRIBUTING.md
+- pydantic-ai 2.54.0 source, for `get_user_agent()` and where each model sets the header per request: https://github.com/pydantic/pydantic-ai/blob/v2.54.0/pydantic_ai_slim/pydantic_ai/models/__init__.py
+- GitHub's search syntax docs, where I found the `-linked:pr` qualifier: https://docs.github.com/en/search-github/searching-on-github/searching-issues-and-pull-requests
+- GitHub's docs on SSH commit signing: https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification
